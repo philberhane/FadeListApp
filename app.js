@@ -26,7 +26,7 @@ app.use(cors())
 
 
 
-app.post('/sayHello', routes.sayHello)
+app.post('/signUp', routes.signUp)
 
 
 

@@ -1,7 +1,7 @@
 module.exports = {
 
     
-   sayHello(req, res) {
+   signUp(req, res) {
     
     var firebase = require('firebase');
     
@@ -29,9 +29,16 @@ module.exports = {
     // If role is barber, query database for existing invite
     // Add a shop key value pair to identify which shop they work at using
     // shop's email split at @
-    if (firebase.database().ref('/users/' + username)) {
-        console.log("account exists")
-    } else {
+    if (firebase.database().ref('/users/' + username) && role === "Barber" && firebase.database().ref('/users/' + username + "/status") === "inactive") {
+        var ref = firebase.database().ref('/users');
+        ref.child(username).set({
+            name: name,
+            email: email,
+            password: password,
+            role: role,
+            status: "active"
+           })
+    } else if (!firebase.database().ref('/users/' + username) && role === "Barbershop") {
 
     var ref = firebase.database().ref('/users');
     ref.child(username).set({
@@ -41,6 +48,8 @@ module.exports = {
         role: role
        })
 
+    } else {
+        res.status(500).send({message: "You haven't been invited to this app"});
     }
         
       
