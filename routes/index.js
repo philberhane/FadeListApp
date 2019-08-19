@@ -18,11 +18,10 @@ module.exports = {
       if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
-      var ref = firebase.database().ref('/some/path');
+      var ref = firebase.database().ref('/');
       var usersRef = ref.child('users');
         // Create a new ref and log it’s push key
-        var userRef = usersRef.push();
-        console.log('user key', userRef.key);
+        var userRef = usersRef.push("philberhane@yahoo.com");
         // Create a new ref and save data to it in one step
         var userRef = usersRef.push({
         name: 'Christopher',
