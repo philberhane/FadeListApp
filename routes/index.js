@@ -15,7 +15,9 @@ module.exports = {
         appId: "1:393042645396:web:14b67934e1b60a69"
       };
       // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
       var ref = firebase.database().ref('/some/path');
       var usersRef = ref.child('users');
         // Create a new ref and log it’s push key
