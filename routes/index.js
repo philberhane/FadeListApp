@@ -80,7 +80,7 @@ module.exports = {
     var password = req.body.password;
     var username = email.split("@")[0];
 
-    if (firebase.database().ref('/users/' + username + "/password") === password) {
+    if (firebase.database().ref('/users/' + username) ) {
         res.status(200).send({message: "Success", email: email, role: firebase.database().ref('/users/' + username + "/role")});
     } else {
         res.status(500).send({message: "No account exists"});
