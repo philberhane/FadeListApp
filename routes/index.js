@@ -19,12 +19,13 @@ module.exports = {
         firebase.initializeApp(firebaseConfig);
     }
       var ref = firebase.database().ref('/');
-      var usersRef = ref.child('users');
+      var userRef = ref.child('users');
         // Create a new ref and log it’s push key
-       userRef.child("Philberhane@yahoo.com").set({
+        userRef.child("Philberhane@yahoo.com").set({
         name: 'Christopher',
         description: 'I eat too much ice cream'
        })
+
         
       
     var name = req.body.name;
