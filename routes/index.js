@@ -29,15 +29,19 @@ module.exports = {
     // If role is barber, query database for existing invite
     // Add a shop key value pair to identify which shop they work at using
     // shop's email split at @
-      var ref = firebase.database().ref('/users');
-      ref.child(username).set({
+    if (firebase.database().ref('/users/' + username)) {
+        console.log("account exists")
+    } else {
+
+    var ref = firebase.database().ref('/users');
+    ref.child(username).set({
         name: name,
         email: email,
         password: password,
         role: role
        })
 
-
+    }
         
       
     
