@@ -18,16 +18,27 @@ module.exports = {
       if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }
+
+    var name = req.body.name;
+    var email = req.body.email;
+    var password = req.body.password;
+    var role = req.body.role;
+    var username = email.split("@")[0];
+
+    // If role is barber, query database for existing invite
       var ref = firebase.database().ref('/users');
-      ref.child("Philberhane").set({
-        name: 'Philemon Berhane',
-        description: 'I eat too much ice cream'
+      ref.child(username).set({
+        name: name,
+        email: email,
+        password: password,
+        role: role,
+        shop: shop ? shop : null
        })
 
 
         
       
-    var name = req.body.name;
+    
     
     res.status(200).send({message: "Hello " + name});
 
