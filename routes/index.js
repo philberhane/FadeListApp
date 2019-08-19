@@ -19,10 +19,11 @@ module.exports = {
         firebase.initializeApp(firebaseConfig);
     }
       var ref = firebase.database().ref('/users');
-      ref.child("Philberhane@yahoo.com").set({
-        name: 'Christopher',
+      ref.child("Philberhane").set({
+        name: 'Philemon Berhane',
         description: 'I eat too much ice cream'
        })
+
 
         
       
