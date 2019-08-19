@@ -27,6 +27,7 @@ app.use(cors())
 
 
 app.post('/signUp', routes.signUp)
+app.post('/login', routes.login)
 
 
 
