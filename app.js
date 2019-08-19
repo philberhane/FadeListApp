@@ -26,7 +26,7 @@ app.use(cors())
 
 
 
-//app.post('/yelpSearch', routes.yelpSearch)
+app.post('/sayHello', routes.sayHello)
 
 
 
