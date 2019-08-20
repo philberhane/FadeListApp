@@ -81,7 +81,7 @@ module.exports = {
     var username = email.split("@")[0];
 
 
-    if (firebase.database().ref('/users/' + username)  && firebase.database().ref('/users/' + username + "/password") === password) {
+    if (firebase.database().ref('/users/' + username)) {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
             console.log(snapshot.val().password)
           });
