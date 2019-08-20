@@ -83,10 +83,16 @@ module.exports = {
 
     if (firebase.database().ref('/users/' + username)) {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
-            console.log(snapshot.val().password)
+            if (snapshot.val().password === password) {
+
+                res.status(200).send({message: "Success", email: email, role: snapshot.val().role});
+
+            } else {
+                res.status(500).send({message: "invalid password"});
+            }
           });
 
-        res.status(200).send({message: "Success", email: email, role: firebase.database().ref('/users/' + username + "/role")});
+        
     } else {
         res.status(500).send({message: "No account exists"});
     }
