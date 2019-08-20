@@ -85,7 +85,7 @@ module.exports = {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
             if (snapshot.val().password === password) {
 
-                res.status(200).send({message: "Success", email: email, role: snapshot.val().role});
+                res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name});
 
             } else {
                 res.status(500).send({message: "invalid password"});
