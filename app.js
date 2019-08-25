@@ -28,6 +28,8 @@ app.use(cors())
 
 app.post('/signUp', routes.signUp)
 app.post('/login', routes.login)
+app.post('/invite', routes.invite)
+
 
 
 

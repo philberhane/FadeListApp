@@ -84,7 +84,7 @@ module.exports = {
     var password = req.body.password;
     var username = email.split("@")[0];
 
-
+    if (firebase.database().ref('/users/' + username)) {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
             if (snapshot.val()!==null && snapshot.val().password === password) {
 
@@ -95,8 +95,9 @@ module.exports = {
             }
           });
 
-        
+    } else {
         return res.status(500).send({message: "No account exists"});
+    }
     
 
 
@@ -127,7 +128,7 @@ module.exports = {
         var email = req.body.email;
         var status = "inactive";
         var username = email.split("@")[0];
-        var shopUsername = req.body.shopUsername;
+        var shopEmail = req.body.shopEmail;
         
     
         // Check if user exists with given username and email
@@ -164,7 +165,7 @@ module.exports = {
                 ref.child(username).set({
                     email: email,
                     status: status,
-                    shopUsername: shopUsername
+                    shopEmail: shopEmail
                 })
                 return res.status(200).send({message: "Success"});
             } else {
