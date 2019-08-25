@@ -85,9 +85,8 @@ module.exports = {
     var username = email.split("@")[0];
 
 
-    if (firebase.database().ref('/users/' + username)) {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
-            if (snapshot.val().password === password) {
+            if (snapshot.val()!==null && snapshot.val().password === password) {
 
                 return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username});
 
@@ -97,9 +96,8 @@ module.exports = {
           });
 
         
-    } else {
         return res.status(500).send({message: "No account exists"});
-    }
+    
 
 
 
@@ -159,6 +157,20 @@ module.exports = {
         // } else {
         //     res.status(500).send({message: "You haven't been invited to this app"});
         // }
+
+        firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
+            if (snapshot.val()===null) {
+                var ref = firebase.database().ref('/users');
+                ref.child(username).set({
+                    email: email,
+                    status: status,
+                    shopUsername: shopUsername
+                })
+                return res.status(200).send({message: "Success"});
+            } else {
+                return res.status(200).send({message: "Account Exists"});
+            }
+        })
             
           
         
