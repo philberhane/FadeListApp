@@ -25,7 +25,9 @@ module.exports = {
     var role = req.body.role;
     var username = email.split("@")[0];
 
-    console.log(firebase.database().ref('/users/' + username))
+    firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
+        console.log(snapshot.val())
+    })
 
 
     // If role is barber, query database for existing invite
