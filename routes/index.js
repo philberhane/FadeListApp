@@ -49,13 +49,13 @@ module.exports = {
        })
 
     } else {
-        res.status(500).send({message: "You haven't been invited to this app"});
+        return res.status(500).send({message: "You haven't been invited to this app"});
     }
         
       
     
     
-    res.status(200).send({message: "Success"});
+    return res.status(200).send({message: "Success"});
 
 },
 
@@ -85,16 +85,16 @@ module.exports = {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
             if (snapshot.val().password === password) {
 
-                res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username});
+                return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username});
 
             } else {
-                res.status(500).send({message: "invalid password"});
+                return res.status(500).send({message: "invalid password"});
             }
           });
 
         
     } else {
-        res.status(500).send({message: "No account exists"});
+        return res.status(500).send({message: "No account exists"});
     }
 
 
