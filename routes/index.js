@@ -25,6 +25,8 @@ module.exports = {
     var role = req.body.role;
     var username = email.split("@")[0];
 
+    console.log(firebase.database().ref('/users/' + username))
+
 
     // If role is barber, query database for existing invite
     // Add a shop key value pair to identify which shop they work at using
