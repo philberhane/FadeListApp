@@ -26,14 +26,13 @@ module.exports = {
     var username = email.split("@")[0];
 
     firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
-        console.log(snapshot.val())
-    })
+
 
 
     // If role is barber, query database for existing invite
     // Add a shop key value pair to identify which shop they work at using
     // shop's email split at @
-    if (firebase.database().ref('/users/' + username) && role === "Barber" && firebase.database().ref('/users/' + username + "/status") === "inactive") {
+    if (snapshot.val()!==null && role === "Barber" && snapshot.val().status === "inactive") {
         var ref = firebase.database().ref('/users');
         ref.child(username).set({
             name: name,
@@ -42,7 +41,7 @@ module.exports = {
             role: role,
             status: "active"
            })
-    } else if (!firebase.database().ref('/users/' + username) && role === "Barbershop") {
+    } else if (snapshot.val()===null && role === "Barbershop") {
 
     var ref = firebase.database().ref('/users');
     ref.child(username).set({
@@ -55,6 +54,7 @@ module.exports = {
     } else {
         return res.status(500).send({message: "You haven't been invited to this app"});
     }
+})
         
       
     
