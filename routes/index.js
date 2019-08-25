@@ -85,7 +85,7 @@ module.exports = {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
             if (snapshot.val().password === password) {
 
-                res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name});
+                res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username});
 
             } else {
                 res.status(500).send({message: "invalid password"});
@@ -99,6 +99,68 @@ module.exports = {
 
 
 
+    },
+
+
+
+
+    invite(req, res) {
+    
+        var firebase = require('firebase');
+        
+        var firebaseConfig = {
+            apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
+            authDomain: "nodebarbershopdatabase.firebaseapp.com",
+            databaseURL: "https://nodebarbershopdatabase.firebaseio.com",
+            projectId: "nodebarbershopdatabase",
+            storageBucket: "",
+            messagingSenderId: "393042645396",
+            appId: "1:393042645396:web:14b67934e1b60a69"
+          };
+          // Initialize Firebase
+          if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+    
+        var email = req.body.email;
+        var status = "inactive";
+        var username = email.split("@")[0];
+        var shopUsername = req.body.shopUsername;
+        
+    
+        // Check if user exists with given username and email
+        // If not, create one with above values and send email to user saying they've been invited, then success message
+        // If user exists, send error message
+        // IF email fails, send error message
+        
+        // if (firebase.database().ref('/users/' + username) && role === "Barber" && firebase.database().ref('/users/' + username + "/status") === "inactive") {
+        //     var ref = firebase.database().ref('/users');
+        //     ref.child(username).set({
+        //         name: name,
+        //         email: email,
+        //         password: password,
+        //         role: role,
+        //         status: "active"
+        //        })
+        // } else if (!firebase.database().ref('/users/' + username) && role === "Barbershop") {
+    
+        // var ref = firebase.database().ref('/users');
+        // ref.child(username).set({
+        //     name: name,
+        //     email: email,
+        //     password: password,
+        //     role: role
+        //    })
+    
+        // } else {
+        //     res.status(500).send({message: "You haven't been invited to this app"});
+        // }
+            
+          
+        
+        
+        res.status(200).send({message: "Success"});
+    
     }
     
 
