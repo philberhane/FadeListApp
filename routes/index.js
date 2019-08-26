@@ -178,6 +178,12 @@ module.exports = {
         
         res.status(200).send({message: "Success"});
     
+    },
+
+    receiveText(req, res) {
+        console.log(req.body)
+        res.status(200).send({message: "Success"});
+
     }
     
 
