@@ -181,7 +181,8 @@ module.exports = {
     },
 
     receiveText(req, res) {
-        console.log(req.body)
+        console.log(req.body.Body); // the message body
+        console.log(req.body.From);
         res.status(200).send({message: "Success"});
 
     }
