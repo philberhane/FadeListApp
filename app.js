@@ -22,7 +22,7 @@ app.use(bodyParser.json())
 app.use(logger('dev'))
 app.use(errorhandler())
 app.use(cors())
-
+app.use(bodyParser.urlencoded({extended: false}))
 
 
 
