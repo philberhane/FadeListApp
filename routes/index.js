@@ -182,7 +182,8 @@ module.exports = {
 
     receiveText(req, res) {
         console.log(req.body); // the message body
-       // console.log(req.body.From);
+       console.log(req.body.From);
+       console.log(req.body.Body);
         res.send(`<Response></Response>`);
 
     }
