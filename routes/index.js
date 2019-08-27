@@ -50,8 +50,7 @@ module.exports = {
         email: email,
         password: password,
         role: role,
-        username: username,
-        waitlist : 'arrayHere'
+        username: username
        })
 
     } else {
@@ -222,7 +221,7 @@ module.exports = {
                     }
                     arrayOfCuts.push(obj)
                     ref.child('waitlist').set({
-                        arrayOfCuts
+                        arrayOfCuts: arrayOfCuts
                     });
                 } else {
                     var arrayOfCuts = []
