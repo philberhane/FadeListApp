@@ -232,8 +232,9 @@ module.exports = {
                         number: req.body.From
                     }
                     arrayOfCuts.array.push(obj)
-                    ref.set({
-                        waitlist: arrayOfCuts
+                    var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
+                    ref.child('waitlist').set({
+                        arrayOfCuts
                     });
                 }
                 }
