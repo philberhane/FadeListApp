@@ -204,10 +204,13 @@ module.exports = {
        console.log(req.body.Body);
        firebase.database().ref('/users/').once('value').then(function(userSnapshot) {
         userSnapshot.forEach(function(userSnapshot) {
-            // if (userSnapshot.val().phone === req.body.To) {
-            //     console.log(userSnapshot.val().waitlist)
-            // }
-            console.log(userSnapshot.val())
+             if (userSnapshot.val().phone) {
+                 var phone = userSnapshot.val().phone.split(' ')
+                 var phoneNumber = phone[0] + phone[1] + phone[2] + phone[3]
+                if (phoneNumber === req.body.To) {
+                 console.log(userSnapshot.val().waitlist)
+                }
+             }
         })
     })
 
