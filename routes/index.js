@@ -208,14 +208,13 @@ module.exports = {
                  var phone = userSnapshot.val().phone.split(' ')
                  var phoneNumber = phone[0] + phone[1] + phone[2] + phone[3]
                 if (phoneNumber === req.body.To) {
-                    var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                     var array = userSnapshot.val().waitlist
                     var obj = {
                         cut: req.body.Body,
                         number: req.body.From
                     }
                     array.push(obj)
-                    ref.child('waitlist').set({
+                    userSnapshot.val().child('waitlist').set({
                      array
                     });
                 }
