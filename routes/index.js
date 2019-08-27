@@ -94,7 +94,7 @@ module.exports = {
                 if (snapshot.val().role === "Barbershop") {
                     return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username});
                 } else {
-                    return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username, shopEmail: shopEmail});
+                    return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username, shopEmail: snapshot.val().shopEmail});
                 }
 
             } else {
