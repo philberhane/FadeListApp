@@ -278,17 +278,17 @@ module.exports = {
             userSnapshot.forEach(function(userSnapshot) {
                 //console.log(userSnapshot.val().email)
                  if (userSnapshot.val().email === shopEmail) {
-                // var fromPhone = snapshot.val().phone
-                // var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
-                // var toPhone = arrayOfCuts[0].number
-                // var cutDescription = arrayOfCuts[0].cut
+                var fromPhone = userSnapshot.val().phone
+                var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
+                var toPhone = arrayOfCuts[0].number
+                var cutDescription = arrayOfCuts[0].cut
                 console.log(userSnapshot.val())
                 console.log(userSnapshot.val().waitlist.arrayOfCuts)
                 
-                // arrayOfCuts.shift()
-                // ref.child('waitlist').set({
-                //     arrayOfCuts: arrayOfCuts
-                // });
+                arrayOfCuts.shift()
+                ref.child('waitlist').set({
+                    arrayOfCuts: arrayOfCuts
+                });
                  }
             })
         })
