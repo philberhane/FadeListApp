@@ -286,6 +286,7 @@ module.exports = {
                 console.log(userSnapshot.val().waitlist.arrayOfCuts)
                 
                 arrayOfCuts.shift()
+                var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                 ref.child('waitlist').set({
                     arrayOfCuts: arrayOfCuts
                 });
