@@ -39,7 +39,8 @@ module.exports = {
             email: email,
             password: password,
             role: role,
-            status: "active"
+            status: "active",
+            username: username
            })
     } else if (snapshot.val()===null && role === "Barbershop") {
 
@@ -48,7 +49,8 @@ module.exports = {
         name: name,
         email: email,
         password: password,
-        role: role
+        role: role,
+        username: username
        })
 
     } else {
@@ -208,13 +210,14 @@ module.exports = {
                  var phone = userSnapshot.val().phone.split(' ')
                  var phoneNumber = phone[0] + phone[1] + phone[2] + phone[3]
                 if (phoneNumber === req.body.To) {
+                    var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                     var array = userSnapshot.val().waitlist
                     var obj = {
                         cut: req.body.Body,
                         number: req.body.From
                     }
                     array.push(obj)
-                    userSnapshot.val().child('waitlist').set({
+                    ref.child('waitlist').set({
                      array
                     });
                 }
