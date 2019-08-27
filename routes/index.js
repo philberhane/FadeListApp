@@ -40,7 +40,8 @@ module.exports = {
             password: password,
             role: role,
             status: "active",
-            username: username
+            username: username,
+            waitlist : 'arrayHere'
            })
     } else if (snapshot.val()===null && role === "Barbershop") {
 
