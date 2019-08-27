@@ -214,7 +214,7 @@ module.exports = {
                     if (userSnapshot.val().waitlist) {
                     var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                     var arrayOfCuts = userSnapshot.val().waitlist
-                    console.log(arrayOfCuts)
+                    console.log(arrayOfCuts.array)
                     var obj = {
                         cut: req.body.Body,
                         number: req.body.From
