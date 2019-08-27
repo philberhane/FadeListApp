@@ -50,7 +50,10 @@ module.exports = {
         email: email,
         password: password,
         role: role,
-        username: username
+        username: username,
+        waitlist: {
+            array: []
+        }
        })
 
     } else {
