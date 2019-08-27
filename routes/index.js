@@ -211,15 +211,15 @@ module.exports = {
                  var phoneNumber = phone[0] + phone[1] + phone[2] + phone[3]
                 if (phoneNumber === req.body.To) {
                     var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
-                    var array = userSnapshot.val().waitlist
-                    console.log(array)
+                    var arrayOfCuts = userSnapshot.val().waitlist
+                    console.log(arrayOfCuts)
                     var obj = {
                         cut: req.body.Body,
                         number: req.body.From
                     }
-                    array.push(obj)
+                    arrayOfCuts.push(obj)
                     ref.child('waitlist').set({
-                     array
+                        arrayOfCuts
                     });
                 }
              }
