@@ -225,14 +225,12 @@ module.exports = {
                         arrayOfCuts
                     });
                 } else {
-                    var arrayOfCuts = {
-                        array : []
-                    }
+                    var arrayOfCuts = []
                     var obj = {
                         cut: req.body.Body,
                         number: req.body.From
                     }
-                    arrayOfCuts.array.push(obj)
+                    arrayOfCuts.push(obj)
                     var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                     ref.child('waitlist').set({
                         arrayOfCuts
