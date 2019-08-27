@@ -217,7 +217,7 @@ module.exports = {
                         cut: req.body.Body,
                         number: req.body.From
                     }
-                    arrayOfCuts.push(obj)
+                    arrayOfCuts.array.push(obj)
                     ref.child('waitlist').set({
                         arrayOfCuts
                     });
