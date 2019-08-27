@@ -211,7 +211,7 @@ module.exports = {
                  var phone = userSnapshot.val().phone.split(' ')
                  var phoneNumber = phone[0] + phone[1] + phone[2] + phone[3]
                 if (phoneNumber === req.body.To) {
-                    if (userSnapshot.val().waitlist) {
+                    if (userSnapshot.val().waitlist !== 'arrayHere') {
                     var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                     var arrayOfCuts = userSnapshot.val().waitlist
                     console.log(arrayOfCuts)
@@ -223,7 +223,7 @@ module.exports = {
                     ref.child('waitlist').set({
                         arrayOfCuts
                     });
-                } else if (userSnapshot.val().waitlist === 'arrayHere') {
+                } else if (userSnapshot.val().waitlist) {
                     var arrayOfCuts = {
                         array : []
                     }
