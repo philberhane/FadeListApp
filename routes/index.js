@@ -212,6 +212,7 @@ module.exports = {
                 if (phoneNumber === req.body.To) {
                     var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                     var array = userSnapshot.val().waitlist
+                    console.log(array)
                     var obj = {
                         cut: req.body.Body,
                         number: req.body.From
