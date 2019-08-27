@@ -213,6 +213,7 @@ module.exports = {
                  var phone = userSnapshot.val().phone.split(' ')
                  var phoneNumber = phone[0] + phone[1] + phone[2] + phone[3]
                 if (phoneNumber === req.body.To) {
+                    if (userSnapshot.val().waitlist !== null) {
                     var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                     var arrayOfCuts = userSnapshot.val().waitlist
                     console.log(arrayOfCuts)
@@ -224,6 +225,19 @@ module.exports = {
                     ref.child('waitlist').set({
                         arrayOfCuts
                     });
+                } else {
+                    var arrayOfCuts = {
+                        array : []
+                    }
+                    var obj = {
+                        cut: req.body.Body,
+                        number: req.body.From
+                    }
+                    arrayOfCuts.array.push(obj)
+                    ref.child('waitlist').set({
+                        arrayOfCuts
+                    });
+                }
                 }
              }
         })
