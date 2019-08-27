@@ -275,10 +275,10 @@ module.exports = {
         // Find barbershop in firebase
         if (firebase.database().ref('/users/' + username)) {
             firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
-                var fromPhone = snapshot.val().phone
-                var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
-                var toPhone = arrayOfCuts[0].number
-                var cutDescription = arrayOfCuts[0].cut
+                // var fromPhone = snapshot.val().phone
+                // var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
+                // var toPhone = arrayOfCuts[0].number
+                // var cutDescription = arrayOfCuts[0].cut
                 console.log(snapshot.val())
                 
                 // arrayOfCuts.shift()
