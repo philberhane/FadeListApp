@@ -272,11 +272,11 @@ module.exports = {
         var shopEmail = req.body.shopEmail
         var name = req.body.name
         var username = shopEmail.split("@")[0];
-        console.log("Shop Email " + shopEmail)
+        //console.log("Shop Email " + shopEmail)
         // Find barbershop in firebase
         firebase.database().ref('/users/').once('value').then(function(userSnapshot) {
             userSnapshot.forEach(function(userSnapshot) {
-                console.log(userSnapshot.val().email)
+                //console.log(userSnapshot.val().email)
                  if (userSnapshot.val().email === shopEmail) {
                 // var fromPhone = snapshot.val().phone
                 // var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
