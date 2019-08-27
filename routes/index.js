@@ -290,8 +290,20 @@ module.exports = {
                 ref.child('waitlist').set({
                     arrayOfCuts: arrayOfCuts
                 });
-                 }
-            })
+                const accountSid = 'ACa76d8d56714594b83c8158acfdb6ed9c';
+                const authToken = 'f28300660b1522e871b55efe9abc8228';
+                const client = require('twilio')(accountSid, authToken);
+
+                client.messages
+                .create({
+                    body: "It's your turn for a cut! " + name + " will be cutting your hair. Please arrive at the barbershop within 10 minutes.",
+                    from: fromPhone,
+                    to: toPhone
+                })
+                .then(message => console.log(message.sid));
+                return res.status(200).send({message: "Success", number: toPhone, cut: cutDescription});
+                        }
+                    })
         })
         // Get snapshot
         // Save barbershops number to variable
@@ -301,19 +313,8 @@ module.exports = {
         // send number and type of cut back to barber
         // send text message to number
 
-        const accountSid = 'ACa76d8d56714594b83c8158acfdb6ed9c';
-        const authToken = 'f28300660b1522e871b55efe9abc8228';
-        const client = require('twilio')(accountSid, authToken);
+    
 
-        client.messages
-        .create({
-            body: "It's your turn for a cut! " + name + " will be cutting your hair. Please arrive at the barbershop within 10 minutes.",
-            from: fromPhone,
-            to: toPhone
-        })
-        .then(message => console.log(message.sid));
-
-        return res.status(200).send({message: "Success", number: toPhone, cut: cutDescription});
 
     }
     
