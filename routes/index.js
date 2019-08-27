@@ -221,7 +221,7 @@ module.exports = {
                     }
                     arrayOfCuts.arrayOfCuts.push(obj)
                     ref.child('waitlist').set({
-                        arrayOfCuts: arrayOfCuts
+                        arrayOfCuts: arrayOfCuts.arrayOfCuts
                     });
                 } else {
                     var arrayOfCuts = []
