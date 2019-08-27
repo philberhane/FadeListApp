@@ -281,6 +281,7 @@ module.exports = {
                 // var toPhone = arrayOfCuts[0].number
                 // var cutDescription = arrayOfCuts[0].cut
                 console.log(userSnapshot.val())
+                console.log(userSnapshot.val().waitlist.arrayOfCuts)
                 
                 // arrayOfCuts.shift()
                 // ref.child('waitlist').set({
