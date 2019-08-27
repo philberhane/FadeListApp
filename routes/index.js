@@ -34,7 +34,9 @@ module.exports = {
     // shop's email split at @
     if (snapshot.val()!==null && role === "Barber" && snapshot.val().status === "inactive") {
         var ref = firebase.database().ref('/users');
+        var shopEmail = snapshot.val().shopEmail
         ref.child(username).set({
+            shopEmail: shopEmail,
             name: name,
             email: email,
             password: password,
@@ -89,8 +91,11 @@ module.exports = {
     if (firebase.database().ref('/users/' + username)) {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
             if (snapshot.val()!==null && snapshot.val().password === password) {
-
-                return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username});
+                if (snapshot.val().role === "Barbershop") {
+                    return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username});
+                } else {
+                    return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username, shopEmail: shopEmail});
+                }
 
             } else {
                 return res.status(500).send({message: "invalid password"});
@@ -242,6 +247,69 @@ module.exports = {
 
 
         res.send(`<Response></Response>`);
+
+    },
+
+    sendText(req, res) {
+
+        var firebase = require('firebase');
+        
+        var firebaseConfig = {
+            apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
+            authDomain: "nodebarbershopdatabase.firebaseapp.com",
+            databaseURL: "https://nodebarbershopdatabase.firebaseio.com",
+            projectId: "nodebarbershopdatabase",
+            storageBucket: "",
+            messagingSenderId: "393042645396",
+            appId: "1:393042645396:web:14b67934e1b60a69"
+          };
+          // Initialize Firebase
+          if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        // Req must include barber's barbershop
+        var shopEmail = req.body.shopEmail
+        var name = req.body.name
+        var username = shopEmail.split("@")[0];
+        // Find barbershop in firebase
+        if (firebase.database().ref('/users/' + username)) {
+            firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
+                var fromPhone = snapshot.val().phone
+                var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
+                var toPhone = arrayOfCuts[0].number
+                var cutDescription = arrayOfCuts[0].cut
+                console.log(arrayOfCuts)
+                console.log(toPhone)
+                console.log(cutDescription)
+                arrayOfCuts.shift()
+                ref.child('waitlist').set({
+                    arrayOfCuts: arrayOfCuts
+                });
+            })
+        }
+        return res.status(200).send({message: "Success"});
+        // Get snapshot
+        // Save barbershops number to variable
+        // Pull waitlist
+        // Save user number and cut to variables
+        // pop waitlist beginning and save to firebase
+        // send number and type of cut back to barber
+        // send text message to number
+
+        const accountSid = 'ACa76d8d56714594b83c8158acfdb6ed9c';
+        const authToken = 'f28300660b1522e871b55efe9abc8228';
+        const client = require('twilio')(accountSid, authToken);
+
+        // client.messages
+        // .create({
+        //     body: "It's your turn for a cut! X will be cutting your hair. Please arrive at the barbershop within 10 minutes.",
+        //     from: '+15017122661',
+        //     to: '+15558675310'
+        // })
+        // .then(message => console.log(message.sid));
+
+        
 
     }
     
