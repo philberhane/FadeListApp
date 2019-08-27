@@ -223,7 +223,7 @@ module.exports = {
                     ref.child('waitlist').set({
                         arrayOfCuts
                     });
-                } else {
+                } else if (userSnapshot.val().waitlist === 'arrayHere') {
                     var arrayOfCuts = {
                         array : []
                     }
