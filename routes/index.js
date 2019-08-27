@@ -273,21 +273,23 @@ module.exports = {
         var name = req.body.name
         var username = shopEmail.split("@")[0];
         // Find barbershop in firebase
-        if (firebase.database().ref('/users/' + username)) {
-            firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
+        firebase.database().ref('/users/').once('value').then(function(userSnapshot) {
+            userSnapshot.forEach(function(userSnapshot) {
+                 if (userSnapshot.val().email === shopEmail) {
                 // var fromPhone = snapshot.val().phone
                 // var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
                 // var toPhone = arrayOfCuts[0].number
                 // var cutDescription = arrayOfCuts[0].cut
-                console.log(snapshot.val())
+                console.log(userSnapshot.val())
                 
                 // arrayOfCuts.shift()
                 // ref.child('waitlist').set({
                 //     arrayOfCuts: arrayOfCuts
                 // });
+                 }
             })
-        }
-        return res.status(200).send({message: "Success"});
+        })
+            return res.status(200).send({message: "Success"});
         // Get snapshot
         // Save barbershops number to variable
         // Pull waitlist
