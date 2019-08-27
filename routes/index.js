@@ -279,13 +279,12 @@ module.exports = {
                 var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
                 var toPhone = arrayOfCuts[0].number
                 var cutDescription = arrayOfCuts[0].cut
-                console.log(arrayOfCuts)
-                console.log(toPhone)
-                console.log(cutDescription)
-                arrayOfCuts.shift()
-                ref.child('waitlist').set({
-                    arrayOfCuts: arrayOfCuts
-                });
+                console.log(snapshot.val())
+                
+                // arrayOfCuts.shift()
+                // ref.child('waitlist').set({
+                //     arrayOfCuts: arrayOfCuts
+                // });
             })
         }
         return res.status(200).send({message: "Success"});
