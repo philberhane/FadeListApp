@@ -232,7 +232,7 @@ module.exports = {
                     arrayOfCuts.push(obj)
                     var ref = firebase.database().ref('/users/'+userSnapshot.val().username);
                     ref.child('waitlist').set({
-                        arrayOfCuts
+                        arrayOfCuts: arrayOfCuts
                     });
                 }
                 }
