@@ -184,6 +184,15 @@ module.exports = {
         console.log(req.body); // the message body
        console.log(req.body.From);
        console.log(req.body.Body);
+       firebase.database().ref('/users/').once('value').then(function(userSnapshot) {
+        userSnapshot.forEach(function(userSnapshot) {
+            if (userSnapshot.val().phone === req.body.To) {
+                console.log(userSnapshot.val().waitlist)
+            }
+        })
+    })
+
+
         res.send(`<Response></Response>`);
 
     }
