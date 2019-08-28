@@ -296,7 +296,7 @@ module.exports = {
 
                 client.messages
                 .create({
-                    body: "It's your turn for a cut! " + name + " will be cutting your hair. Please arrive at the barbershop within 10 minutes.",
+                    body: "It's your turn for a cut! " + name + " will be cutting your hair. Please arrive at the barbershop within 10 minutes or risk being skipped.",
                     from: fromPhone,
                     to: toPhone
                 })
