@@ -346,10 +346,14 @@ module.exports = {
             userSnapshot.forEach(function(userSnapshot) {
                 //console.log(userSnapshot.val().email)
                  if (userSnapshot.val().email === shopEmail) {
+                     if (userSnapshot.val().waitlist) {
                 var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
-
                 return res.status(200).send({message: arrayOfCuts});
+                        } else {
+                            return res.status(200).send({message: "The waitlist is currently empty"});
                         }
+                    
+                    }
                     })
         })
         // Get snapshot
