@@ -278,6 +278,7 @@ module.exports = {
             userSnapshot.forEach(function(userSnapshot) {
                 //console.log(userSnapshot.val().email)
                  if (userSnapshot.val().email === shopEmail) {
+                    if (userSnapshot.val().waitlist) {
                 var fromPhone = userSnapshot.val().phone
                 var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
                 var toPhone = arrayOfCuts[0].number
@@ -302,7 +303,9 @@ module.exports = {
                 })
                 .then(message => console.log(message.sid));
                 return res.status(200).send({message: "Success", number: toPhone, cut: cutDescription});
-                        }
+                        } else {
+                            return res.status(200).send({message: "The waitlist is currently empty"});
+                        } }
                     })
         })
         // Get snapshot
