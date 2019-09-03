@@ -353,11 +353,70 @@ module.exports = {
                 var arrayOfCuts = userSnapshot.val().waitlist.arrayOfCuts
                 return res.status(200).send({message: arrayOfCuts});
                         } else {
-                            return res.status(200).send({message: "The waitlist is currently empty"});
+                            return res.status(500).send({message: "The waitlist is currently empty"});
                         }
                     
                     }
                     })
+        })
+        // Get snapshot
+        // Save barbershops number to variable
+        // Pull waitlist
+        // Save user number and cut to variables
+        // pop waitlist beginning and save to firebase
+        // send number and type of cut back to barber
+        // send text message to number
+
+    
+
+
+    },
+
+    getBarbers(req, res) {
+
+        var firebase = require('firebase');
+        
+        var firebaseConfig = {
+            apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
+            authDomain: "nodebarbershopdatabase.firebaseapp.com",
+            databaseURL: "https://nodebarbershopdatabase.firebaseio.com",
+            projectId: "nodebarbershopdatabase",
+            storageBucket: "",
+            messagingSenderId: "393042645396",
+            appId: "1:393042645396:web:14b67934e1b60a69"
+          };
+          // Initialize Firebase
+          if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        // Req must include barber's barbershop
+        var shopEmail = req.body.shopEmail
+
+        var userArray = []
+        
+        //console.log("Shop Email " + shopEmail)
+        // Find barbershop in firebase
+        firebase.database().ref('/users/').once('value').then(function(userSnapshot) {
+            userSnapshot.forEach(function(userSnapshot) {
+                //console.log(userSnapshot.val().email)
+                 if (userSnapshot.val().shopEmail === shopEmail) {
+                    var user = {
+                        email: userSnapshot.val().email,
+                        name: userSnapshot.val().name
+                    }
+                    userArray.push(user)
+                    }
+
+
+                    })
+                    if (userArray.length>0) {
+                        return res.status(200).send({message: userArray});
+                    } else {
+                        return res.status(500).send({message: "Error: There are no users"});
+                    }
+
+
         })
         // Get snapshot
         // Save barbershops number to variable

@@ -32,6 +32,7 @@ app.post('/invite', routes.invite)
 app.post('/receiveText', routes.receiveText)
 app.post('/sendText', routes.sendText)
 app.post('/getWaitlist', routes.getWaitlist)
+app.post('/getBarbers', routes.getBarbers)
 
 
 
