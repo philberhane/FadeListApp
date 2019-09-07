@@ -20,7 +20,7 @@ module.exports = {
     }
 
     var name = req.body.name;
-    var email = req.body.email;
+    var email = req.body.email.toLowerCase();
     var password = req.body.password;
     var role = req.body.role;
     var username = email.split("@")[0];
@@ -84,7 +84,7 @@ module.exports = {
         firebase.initializeApp(firebaseConfig);
     }
    
-    var email = req.body.email;
+    var email = req.body.email.toLowerCase();
     var password = req.body.password;
     var username = email.split("@")[0];
 
@@ -132,7 +132,7 @@ module.exports = {
             firebase.initializeApp(firebaseConfig);
         }
     
-        var email = req.body.email;
+        var email = req.body.email.toLowerCase();
         var status = "inactive";
         var username = email.split("@")[0];
         var shopEmail = req.body.shopEmail;
@@ -410,7 +410,7 @@ module.exports = {
 
 
                     })
-                    if (userArray.length>0) {
+                    if (userArray.length > 0) {
                         return res.status(200).send({message: userArray});
                     } else {
                         return res.status(500).send({message: "Error: There are no users"});
