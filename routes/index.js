@@ -87,6 +87,7 @@ module.exports = {
     var email = req.body.email.toLowerCase();
     var password = req.body.password;
     var username = email.split("@")[0];
+    console.log(email)
 
     if (firebase.database().ref('/users/' + username)) {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
