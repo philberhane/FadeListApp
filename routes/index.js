@@ -172,19 +172,19 @@ module.exports = {
             snapshot.forEach(function(snapshot) {
             if (snapshot.val().email === email) {
                 exists = true
-            }
-            if (exists === false) {
-                var ref = firebase.database().ref('/users');
-                ref.child(username).set({
-                    email: email,
-                    status: status,
-                    shopEmail: shopEmail
-                })
-                return res.status(200).send({message: "Success"});
-            } else {
-                return res.status(500).send({message: "Account Exists"});
-            }
-        })
+            }})
+
+        if (exists === false) {
+            var ref = firebase.database().ref('/users');
+            ref.child(username).set({
+                email: email,
+                status: status,
+                shopEmail: shopEmail
+            })
+            return res.status(200).send({message: "Success"});
+        } else {
+            return res.status(500).send({message: "Account Exists"});
+        }
         })
             
           
