@@ -167,8 +167,13 @@ module.exports = {
         //     res.status(500).send({message: "You haven't been invited to this app"});
         // }
 
-        firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
-            if (snapshot.val()===null) {
+        firebase.database().ref('/users/').once('value').then(function(snapshot) {
+            var exists = false
+            snapshot.forEach(function(snapshot) {
+            if (snapshot.val().email === email) {
+                exists = true
+            }
+            if (exists === false) {
                 var ref = firebase.database().ref('/users');
                 ref.child(username).set({
                     email: email,
@@ -177,8 +182,9 @@ module.exports = {
                 })
                 return res.status(200).send({message: "Success"});
             } else {
-                return res.status(200).send({message: "Account Exists"});
+                return res.status(500).send({message: "Account Exists"});
             }
+        })
         })
             
           
