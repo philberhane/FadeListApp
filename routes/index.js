@@ -137,6 +137,9 @@ module.exports = {
         var status = "inactive";
         var username = email.split("@")[0];
         var shopEmail = req.body.shopEmail;
+
+        console.log("shopEmail: " + shopEmail)
+        console.log("email: " + email)
         
     
         // Check if user exists with given username and email
