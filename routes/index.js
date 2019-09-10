@@ -119,17 +119,16 @@ module.exports = {
     
         var firebase = require('firebase');
         var nodemailer = require('nodemailer');
-        var nodeoutlook = require('nodejs-nodemailer-outlook')
         var transporter = nodemailer.createTransport("SMTP", {
     host: "smtp-mail.outlook.com", // hostname
-    secureConnection: false, // TLS requires secureConnection to be false
-    port: 587, // port for secure SMTP
+    secureConnection: true, // TLS requires secureConnection to be false
+    port: 465, // port for secure SMTP
     auth: {
         user: "fadelistapp@outlook.com",
         pass: "Dope1234"
     },
     tls: {
-        ciphers:'SSLv3'
+        rejectUnauthorized: false
     }
 });
         
@@ -198,25 +197,21 @@ module.exports = {
                 status: status,
                 shopEmail: shopEmail
             })
-              
-              nodeoutlook.sendEmail({
-                auth: {
-                    user: "fadelistapp@outlook.com",
-                    pass: "Dope1234"
-                }, from: 'fadelistapp@outlook.com',
+            var mailOptions = {
+                from: 'fadelistapp@outlook.com',
                 to: email,
-                subject: 'Hey you, awesome!',
-                html: '<b>This is bold text</b>',
-                text: 'This is text version!',
-                onError: (e) => {
-                    console.log(e)
-                    return res.status(500).send({message: "Error Sending Email"});
-                },
-                onSuccess: (i) => console.log(i)
-            }
-             
-             
-            );
+                subject: 'Sending Email using Node.js',
+                text: 'That was easy!'
+              };
+              
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                  return res.status(200).send({message: "Success"});
+                }
+              });
         } else {
             return res.status(500).send({message: "Account Exists"});
         }
