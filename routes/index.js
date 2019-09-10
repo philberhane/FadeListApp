@@ -119,7 +119,7 @@ module.exports = {
     
         var firebase = require('firebase');
         var nodemailer = require('nodemailer');
-        var transporter = nodemailer.createTransport("SMTP", {
+        var transporter = nodemailer.createTransport({
     host: "smtp-mail.outlook.com", // hostname
     secureConnection: true, // TLS requires secureConnection to be false
     port: 465, // port for secure SMTP
