@@ -200,8 +200,8 @@ module.exports = {
             var mailOptions = {
                 from: 'fadelistapp@outlook.com',
                 to: email,
-                subject: 'Sending Email using Node.js',
-                text: 'That was easy!'
+                subject: "You've Been Invited!",
+                text: 'Your Barbershop has invited you to use the FadeList mobile application (the number one waitlist app). Please click here to download and signup!'
               };
               
               transporter.sendMail(mailOptions, function(error, info){
