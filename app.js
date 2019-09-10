@@ -23,7 +23,7 @@ app.use(logger('dev'))
 app.use(errorhandler())
 app.use(cors())
 app.use(bodyParser.urlencoded({extended: false}))
-
+app.use(express.static('/client'))
 
 
 app.post('/signUp', routes.signUp)
@@ -34,7 +34,10 @@ app.post('/sendText', routes.sendText)
 app.post('/getWaitlist', routes.getWaitlist)
 app.post('/getBarbers', routes.getBarbers)
 app.post('/deleteBarber', routes.deleteBarber)
-app.get('/completesignup'), res.sendFile('client/completesignup.html')
+app.get('/completesignup', function (req, res) {
+    const path = require('path')
+    res.sendFile(path.resolve('../client/completesignup.html'))
+})
 
 
 
