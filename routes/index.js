@@ -121,14 +121,14 @@ module.exports = {
         var nodemailer = require('nodemailer');
         var transporter = nodemailer.createTransport({
     host: "smtp-mail.outlook.com", // hostname
-    secureConnection: true, // TLS requires secureConnection to be false
-    port: 465, // port for secure SMTP
+    secureConnection: false, // TLS requires secureConnection to be false
+    port: 587, // port for secure SMTP
     auth: {
         user: "fadelistapp@outlook.com",
         pass: "Dope1234"
     },
     tls: {
-        rejectUnauthorized: false
+        ciphers:'SSLv3'
     }
 });
         
