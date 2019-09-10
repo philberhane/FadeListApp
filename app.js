@@ -34,6 +34,7 @@ app.post('/sendText', routes.sendText)
 app.post('/getWaitlist', routes.getWaitlist)
 app.post('/getBarbers', routes.getBarbers)
 app.post('/deleteBarber', routes.deleteBarber)
+app.get('/completesignup'), res.sendFile('client/completesignup.html')
 
 
 
