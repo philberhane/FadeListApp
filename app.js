@@ -35,8 +35,7 @@ app.post('/getWaitlist', routes.getWaitlist)
 app.post('/getBarbers', routes.getBarbers)
 app.post('/deleteBarber', routes.deleteBarber)
 app.get('/completesignup', function (req, res) {
-    const path = require('path')
-    res.sendFile(path.resolve('../client/completesignup.html'))
+    res.sendFile(path.resolve('/client/completesignup.html'))
 })
 
 
