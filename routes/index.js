@@ -118,6 +118,19 @@ module.exports = {
     invite(req, res) {
     
         var firebase = require('firebase');
+        var nodemailer = require('nodemailer');
+        var transporter = nodemailer.createTransport("SMTP", {
+    host: "smtp-mail.outlook.com", // hostname
+    secureConnection: false, // TLS requires secureConnection to be false
+    port: 587, // port for secure SMTP
+    auth: {
+        user: "fadelistapp@outlook.com",
+        pass: "Dope1234"
+    },
+    tls: {
+        ciphers:'SSLv3'
+    }
+});
         
         var firebaseConfig = {
             apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
@@ -184,7 +197,21 @@ module.exports = {
                 status: status,
                 shopEmail: shopEmail
             })
-            return res.status(200).send({message: "Success"});
+            var mailOptions = {
+                from: 'fadelistapp@outlook.com',
+                to: email,
+                subject: 'Sending Email using Node.js',
+                text: 'That was easy!'
+              };
+              
+              transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                  return res.status(200).send({message: "Success"});
+                }
+              });
         } else {
             return res.status(500).send({message: "Account Exists"});
         }
