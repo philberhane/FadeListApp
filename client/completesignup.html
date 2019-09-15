@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
         <style>
                             /**
@@ -42,17 +43,30 @@
         <h1>Subscription: $24.99/mo</h1>
         <p>To complete signing up, please enter your method of payment (you can cancel at any time!)</p>
         </div>
-        <form id="payment-form">
+        <form action="/charge" method="post" id="payment-form">
+            <div class="form-row flex-column">
+              <label for="card-element">
+                Credit or debit card
+              </label>
+              <div id="card-element">
+                <!-- A Stripe Element will be inserted here. -->
+              </div>
+          
+              <!-- Used to display form errors. -->
+              <div id="card-errors" role="alert"></div>
+            </div>
+          
+            <button>Submit Payment</button>
+          </form>
+        <!-- <form id="payment-form">
                  <div class="form-row">
                    <label style="font-family: arial" for="card-element">
                      Credit or debit card
                    </label>
                    <div id="card-element">
-                     <!-- A Stripe Element will be inserted here. -->
                      
                    </div>
                
-                   <!-- Used to display form errors. -->
                    <div id="card-errors" role="alert"></div>
                  </div>
                
@@ -61,7 +75,7 @@
                  <div id="server-response" role="alert">
                      
                  </div>
-               </form>
+               </form> -->
 
         <script>
                             // Create a Stripe client.
