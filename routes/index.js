@@ -27,7 +27,6 @@ module.exports = {
     
     firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
 
-    var code = Math.floor(100000000 + Math.random() * 900000000);
 
     // If role is barber, query database for existing invite
     // Add a shop key value pair to identify which shop they work at using
@@ -57,7 +56,7 @@ module.exports = {
        })
 
     } else {
-        return res.status(500).send({message: "You haven't been invited to this app", code: code});
+        return res.status(500).send({message: "You haven't been invited to this app", username: username});
     }
 })
         
