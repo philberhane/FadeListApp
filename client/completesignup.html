@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+
         <style>
                             /**
                 * The CSS shown here will not be introduced in the Quickstart guide, but shows
@@ -35,24 +36,32 @@
                 }
         </style>
     </head>
-<body>
+<body style="background-color: rgba(235, 235, 235, 1)">
         <script src="https://js.stripe.com/v3/"></script>
-
-        <form action="/charge" method="post" id="payment-form">
-          <div class="form-row">
-            <label for="card-element">
-              Credit or debit card
-            </label>
-            <div id="card-element">
-              <!-- A Stripe Element will be inserted here. -->
-            </div>
-        
-            <!-- Used to display form errors. -->
-            <div id="card-errors" role="alert"></div>
-          </div>
-        
-          <button>Submit Payment</button>
-        </form>
+        <div style="font-family: arial">
+        <h1>Subscription: $24.99/mo</h1>
+        <p>To complete signing up, please enter your method of payment (you can cancel at any time!)</p>
+        </div>
+        <form id="payment-form">
+                 <div class="form-row">
+                   <label style="font-family: arial" for="card-element">
+                     Credit or debit card
+                   </label>
+                   <div id="card-element">
+                     <!-- A Stripe Element will be inserted here. -->
+                     
+                   </div>
+               
+                   <!-- Used to display form errors. -->
+                   <div id="card-errors" role="alert"></div>
+                 </div>
+               
+                 <button style="border: none;background-color: rgba(41,41,41,1); color: white; border-radius: 15px; margin-top: 15px; padding: 10px 20px; font-family: arial" id="button">Submit</button>
+                 
+                 <div id="server-response" role="alert">
+                     
+                 </div>
+               </form>
 
         <script>
                             // Create a Stripe client.
