@@ -24,10 +24,10 @@ module.exports = {
     var password = req.body.password;
     var role = req.body.role;
     var username = email.split("@")[0];
-
+    
     firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
 
-
+    var code = Math.floor(100000000 + Math.random() * 900000000);
 
     // If role is barber, query database for existing invite
     // Add a shop key value pair to identify which shop they work at using
@@ -45,9 +45,10 @@ module.exports = {
             username: username
            })
     } else if (snapshot.val()===null && role === "Barbershop") {
-
     var ref = firebase.database().ref('/users');
     ref.child(username).set({
+        code: code,
+        status: "inactive",
         name: name,
         email: email,
         password: password,
@@ -56,7 +57,7 @@ module.exports = {
        })
 
     } else {
-        return res.status(500).send({message: "You haven't been invited to this app"});
+        return res.status(500).send({message: "You haven't been invited to this app", code: code});
     }
 })
         
@@ -92,10 +93,14 @@ module.exports = {
     if (firebase.database().ref('/users/' + username)) {
         firebase.database().ref('/users/' + username).once('value').then(function(snapshot) {
             if (snapshot.val()!==null && snapshot.val().password === password) {
+                if (snapshot.val().status === 'active') {
                 if (snapshot.val().role === "Barbershop") {
                     return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username});
                 } else {
                     return res.status(200).send({message: "Success", role: snapshot.val().role, email: email, name: snapshot.val().name, username: username, shopEmail: snapshot.val().shopEmail});
+                }
+                } else {
+                    return res.status(500).send({message: "account inactive"});
                 }
 
             } else {
