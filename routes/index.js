@@ -514,6 +514,7 @@ module.exports = {
         stripe.plans.list(
             { limit: 1 },
             function(err, plans) {
+                console.log(plans)
           
             var desiredPlan = plans.data[0]
 
