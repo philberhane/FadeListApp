@@ -37,6 +37,7 @@ app.post('/deleteBarber', routes.deleteBarber)
 app.get('/:code', function (req, res) {
     res.sendFile(__dirname + '/client/completesignup.html')
 })
+app.post('/completeBarbershopSignup', routes.completeBarbershopSignup)
 
 
 
