@@ -530,6 +530,7 @@ module.exports = {
            ]
          }, function(err, subscription) {
              console.log(subscription)
+             return res.status(200).send({message: "Success"});
            }
          );
             })
