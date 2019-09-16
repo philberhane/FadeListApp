@@ -517,6 +517,7 @@ module.exports = {
                 console.log(plans)
           
             var desiredPlan = plans.data[0]
+            console.log(desiredPlan)
 
             stripe.customers.create({
             source: token
