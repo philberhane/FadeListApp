@@ -509,12 +509,11 @@ module.exports = {
         // Once payment is processed, implement Twilio API to purchase number and save to firebase
         // If all is successful, change barbershop status to "active" and render message to webpage
         // Success message should say the payment has been processed, blah blah
-        console.log(token)
 
         stripe.customers.create({
             source: token
           }, function(err, customer) {
-            
+            var customerZip = customer
              stripe.subscriptions.create({
            customer: customer.id,
            items: [
@@ -523,7 +522,7 @@ module.exports = {
              }
            ]
          }, function(err, subscription) {
-             console.log(subscription)
+             console.log(customerZip)
              return res.status(200).send({message: "Success"});
            }
          );
