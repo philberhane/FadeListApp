@@ -56,14 +56,14 @@ module.exports = {
        })
 
     } else {
-        return res.status(500).send({message: "You haven't been invited to this app", username: username});
+        return res.status(500).send({message: "You haven't been invited to this app"});
     }
 })
         
       
     
     
-    return res.status(200).send({message: "Success"});
+    return res.status(200).send({message: "Success", username: username});
 
 },
 
@@ -494,6 +494,65 @@ module.exports = {
     var ref = firebase.database().ref('/users');
     ref.child(username).remove()
     return res.status(200).send({message: "The barber has been deleted"});
+    },
+
+
+
+    completeBarbershopSignup(req, res) {
+
+        const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
+        var token = req.body.token
+        var zipCode = req.body.zipCode
+        // Get on stripe and create account + membership
+        // User card token to 1) Create Customer 2) Subscribe them to Stripe-defined Subscription plan 3) Process payment IMMEDIATELY
+        // Use customer ID from Stripe response and save to firebase
+        // Once payment is processed, implement Twilio API to purchase number and save to firebase
+        // If all is successful, change barbershop status to "active" and render message to webpage
+        // Success message should say the payment has been processed, blah blah
+
+
+        stripe.plans.list(
+            { limit: 1 },
+            function(err, plans) {
+          
+            var desiredPlan = plans.data[0]
+
+            stripe.customers.create({
+            source: token
+          }, function(err, customer) {
+         
+             stripe.subscriptions.create({
+           customer: customer.id,
+           items: [
+             {
+               plan: desiredPlan
+             }
+           ]
+         }, function(err, subscription) {
+             console.log(subscription)
+           }
+         );
+            })
+            })
+
+
+
+    //     var firebase = require('firebase');
+    
+    //     var firebaseConfig = {
+    //     apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
+    //     authDomain: "nodebarbershopdatabase.firebaseapp.com",
+    //     databaseURL: "https://nodebarbershopdatabase.firebaseio.com",
+    //     projectId: "nodebarbershopdatabase",
+    //     storageBucket: "",
+    //     messagingSenderId: "393042645396",
+    //     appId: "1:393042645396:web:14b67934e1b60a69"
+    //   };
+    //   // Initialize Firebase
+    //   if (!firebase.apps.length) {
+    //     firebase.initializeApp(firebaseConfig);
+    // }
+    
     }
 
     

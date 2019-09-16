@@ -46,7 +46,7 @@
         <h3 id="username"></h3>
         <p>To complete signing up, please enter your method of payment (you can cancel at any time!)</p>
         </div>
-        <form action="/charge" method="post" id="payment-form">
+        <div  id="payment-form">
             <div class="form-row col-md-12">
               <label for="card-element">
                 Credit or debit card
@@ -54,37 +54,25 @@
               <div id="card-element" class="w-100 col-md-12">
                 <!-- A Stripe Element will be inserted here. -->
               </div>
+              <div style="margin-top: 15px" class="form-row col-md-12">
+                <label>Zip Code</label>
+                <div class="form-row col-md-12"></div>
+                  <input id="zip" style="border:none; border-radius: 5px; padding-top: 5px;padding-bottom: 5px">
+              </div>
+            </Div>
           
               <!-- Used to display form errors. -->
               <div id="card-errors" role="alert"></div>
             </div>
           
-            <button style="margin-left: 10px;border: none;background-color: rgba(41,41,41,1); color: white; border-radius: 15px; margin-top: 15px; padding: 10px 20px; font-family: arial" id="button">Submit</button>
-          </form>
-        <!-- <form id="payment-form">
-                 <div class="form-row">
-                   <label style="font-family: arial" for="card-element">
-                     Credit or debit card
-                   </label>
-                   <div id="card-element">
-                     
-                   </div>
-               
-                   <div id="card-errors" role="alert"></div>
-                 </div>
-               
-                 <button style="border: none;background-color: rgba(41,41,41,1); color: white; border-radius: 15px; margin-top: 15px; padding: 10px 20px; font-family: arial" id="button">Submit</button>
-                 
-                 <div id="server-response" role="alert">
-                     
-                 </div>
-               </form> -->
+            <button id="stripeButton" style="margin-left: 10px;border: none;background-color: rgba(41,41,41,1); color: white; border-radius: 15px; margin-top: 15px; padding: 10px 20px; font-family: arial">Submit</button>
+        </div>
 
         <script>
                 console.log(window.location.href.split('/')[3])
-                document.getElementById('username').innerText = window.location.href.split('/')[3]
+                var username = window.location.href.split('/')[3]
                             // Create a Stripe client.
-                var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+                var stripe = Stripe('pk_test_HywMMCNkt2NwJZeM7aVG8ghA00UIPnHLij');
 
                 // Create an instance of Elements.
                 var elements = stripe.elements();
@@ -125,34 +113,47 @@
 
                 // Handle form submission.
                 var form = document.getElementById('payment-form');
-                form.addEventListener('submit', function(event) {
-                event.preventDefault();
+                
+                document.getElementById('stripeButton').setAttribute("onclick", "beginMembership()")
 
-                stripe.createToken(card).then(function(result) {
-                    if (result.error) {
-                    // Inform the user if there was an error.
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-                    } else {
-                    // Send the token to your server.
-                    stripeTokenHandler(result.token);
-                    }
-                });
-                });
+                function beginMembership() {
 
-                // Submit the form with the token ID.
-                function stripeTokenHandler(token) {
-                // Insert the token ID into the form so it gets submitted to the server
-                var form = document.getElementById('payment-form');
-                var hiddenInput = document.createElement('input');
-                hiddenInput.setAttribute('type', 'hidden');
-                hiddenInput.setAttribute('name', 'stripeToken');
-                hiddenInput.setAttribute('value', token.id);
-                form.appendChild(hiddenInput);
+                    if (document.getElementById('zip').value.length > 0) {
 
-                // Submit the form
-                form.submit();
+                    stripe.createToken(card).then(function(result) {
+                        if (result.error) {
+                        // Inform the user if there was an error.
+                        var errorElement = document.getElementById('card-errors');
+                        errorElement.textContent = result.error.message;
+                        } else {
+                            const input = {
+                                token : result.token.id,
+                                zipCode: document.getElementById('zip').value
+                            }
+                            fetch('https://barbershop-app-react-node.herokuapp.com/completeBarbershopSignup', {
+                                    method: 'POST',
+                                    body: JSON.stringify(inputValue),
+                                    headers: { "Content-Type": "application/json"}
+                                }).then((response) => response.json())
+                                .then((data) => {
+                                    if (data.message === 'Success') {
+                                        document.getElementById('card-errors').innerText = "Thank you for joining the FadeList Family! Now that you're signed up, feel free to utilize the app!"
+                                    } else {
+                                        // Nested if elses for specific messages
+                                    }
+
+                                })
+
+                        }
+                    })
+                } else {
+                    document.getElementById('card-errors').innerText = 'Zip code cannot be blank!'
                 }
+
+                }
+                // Function to send username and card info to server
+                // Respond will say "Thank you for joining the FadeList Family! Now that you're signed up, feel free to utilize the app!"
+                
         </script>
 
 </body>
