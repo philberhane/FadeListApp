@@ -549,7 +549,7 @@ module.exports = {
         firebase.initializeApp(firebaseConfig);
     }
     var ref = firebase.database().ref('/users');
-    firebase.database().ref('/users/').orderByChild("username").equalTo(username).once('value').then(function(snapshot) {
+    
             //console.log(userSnapshot.val().email)
                 stripe.customers.create({
                     source: token
@@ -569,7 +569,8 @@ module.exports = {
                     .then(local => local.forEach(l =>
                         client.incomingPhoneNumbers
                   .create({phoneNumber: l.friendlyName, smsUrl: "https://barbershop-app-react-node.herokuapp.com/receiveText"})
-                  .then(incoming_phone_number => 
+                  .then(incoming_phone_number =>
+                    firebase.database().ref('/users/').orderByChild("username").equalTo(username).once('value').then(function(snapshot) { 
                     ref.child(username).set({
                         phone: l.friendlyName,
                         phoneID: incoming_phone_number.sid,
@@ -581,12 +582,13 @@ module.exports = {
                         name: snapshot.val().name,
                         email: snapshot.val().email
                     })
+                })
                     )))
                     return res.status(200).send({message: "Success"});
                     
                    }
                  );
-                    })
+                    
                 })
 
 
