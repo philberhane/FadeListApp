@@ -570,7 +570,7 @@ module.exports = {
                     .list({areaCode: areaCode, limit: 1})
                     .then(local => local.forEach(l =>
                         client.incomingPhoneNumbers
-                  .create({phoneNumber: l.friendlyName})
+                  .create({phoneNumber: l.friendlyName, SmsUrl: "https://barbershop-app-react-node.herokuapp.com/receiveText"})
                   .then(incoming_phone_number => 
                     // Save phone number, phone number ID, and Stripe ID to barbershop acct, set acct to active
         //             var ref = firebase.database().ref('/users');
