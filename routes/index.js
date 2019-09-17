@@ -511,23 +511,23 @@ module.exports = {
         // If all is successful, change barbershop status to "active" and render message to webpage
         // Success message should say the payment has been processed, blah blah
 
-        stripe.customers.create({
-            source: token
-          }, function(err, customer) {
-            var customerZip = customer
-             stripe.subscriptions.create({
-           customer: customer.id,
-           items: [
-             {
-               plan: "plan_Fp5tfqu1NVrcvL"
-             }
-           ]
-         }, function(err, subscription) {
-             // Purchase phone number here
-             return res.status(200).send({message: "Success"});
-           }
-         );
-            })
+        // stripe.customers.create({
+        //     source: token
+        //   }, function(err, customer) {
+        //     var customerZip = customer
+        //      stripe.subscriptions.create({
+        //    customer: customer.id,
+        //    items: [
+        //      {
+        //        plan: "plan_Fp5tfqu1NVrcvL"
+        //      }
+        //    ]
+        //  }, function(err, subscription) {
+        //      // Purchase phone number here
+        //      return res.status(200).send({message: "Success"});
+        //    }
+        //  );
+        //     })
 
         const accountSid = 'ACa76d8d56714594b83c8158acfdb6ed9c';
         const authToken = 'f28300660b1522e871b55efe9abc8228';
