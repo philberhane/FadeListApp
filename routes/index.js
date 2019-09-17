@@ -532,11 +532,15 @@ module.exports = {
         const authToken = 'f28300660b1522e871b55efe9abc8228';
         const client = require('twilio')(accountSid, authToken);
 
-        client.availablePhoneNumbers('GB')
-        .mobile
-        .list({limit: 5})
-        .then(mobile => mobile.forEach(m => console.log(m.friendlyName)));
-        return res.status(200).send({message: "Success"});
+
+        client.availablePhoneNumbers('US')
+        .local
+        .list({areaCode: 510, limit: 1})
+        .then(local => local.forEach(l =>
+            client.incomingPhoneNumbers
+      .create({phoneNumber: l.friendlyName})
+      .then(incoming_phone_number => console.log(incoming_phone_number.sid)) 
+        ));
 
     //     var firebase = require('firebase');
     
