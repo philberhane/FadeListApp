@@ -565,6 +565,16 @@ module.exports = {
                      }
                    ]
                  }, function(err, subscription) {
+                    ref.child(username).set({
+                        stripeID: stripeID
+                    })
+                    
+                    
+                   }
+                   
+                 );
+                    })
+
                     client.availablePhoneNumbers('US')
                     .local
                     .list({areaCode: areaCode, limit: 1})
@@ -578,15 +588,10 @@ module.exports = {
                     ref.child(username).set({
                         phone: l.friendlyName,
                         phoneID: incoming_phone_number.sid,
-                        stripeID: stripeID,
                         status: "active"
                     })
                     )))
                     return res.status(200).send({message: "Success"});
-                    
-                   }
-                 );
-                    })
                 } else {
                     return res.status(500).send({message: "Error: There are no users"});
                 }
