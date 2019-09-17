@@ -570,15 +570,12 @@ module.exports = {
                         client.incomingPhoneNumbers
                   .create({phoneNumber: l.friendlyName, smsUrl: "https://barbershop-app-react-node.herokuapp.com/receiveText"})
                   .then(incoming_phone_number => 
-                    // Save phone number, phone number ID, and Stripe ID to barbershop acct, set acct to active
-                     
-        // var shopEmail = snapshot.val().shopEmail
                     ref.child(username).set({
                         phone: l.friendlyName,
                         phoneID: incoming_phone_number.sid,
                         stripeID: stripeID,
                         status: "active",
-                        username: snapshot.val().username,
+                        username: username,
                         role: "Barbershop",
                         password: snapshot.val().password,
                         name: snapshot.val().name,
