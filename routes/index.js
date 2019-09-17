@@ -532,7 +532,7 @@ module.exports = {
         const authToken = 'f28300660b1522e871b55efe9abc8228';
         const client = require('twilio')(accountSid, authToken);
 
-        client.availablePhoneNumbers('916')
+        client.availablePhoneNumbers('GA')
         .mobile
         .list({limit: 1})
         .then(mobile => mobile.forEach(m => console.log(m.friendlyName)));
