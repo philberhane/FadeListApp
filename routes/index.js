@@ -536,7 +536,7 @@ module.exports = {
         .mobile
         .list({limit: 1})
         .then(mobile => mobile.forEach(m => console.log(m.friendlyName)));
-
+        return res.status(200).send({message: "Success"});
 
     //     var firebase = require('firebase');
     
