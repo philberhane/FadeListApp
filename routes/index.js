@@ -25,13 +25,13 @@ module.exports = {
     var role = req.body.role;
     var username = email.split("@")[0];
     
-    firebase.database().ref('/users/').child(username).once('value').then(function(snapshot) {
+    firebase.database().ref('/users/').orderByChild("username").equalTo(username).once('value').then(function(snapshot) {
 
 
     // If role is barber, query database for existing invite
     // Add a shop key value pair to identify which shop they work at using
     // shop's email split at @
-    if (snapshot.val()!==null && role === "Barber" && snapshot.val().status === "inactive") {
+    if (snapshot.exists() && role === "Barber" && snapshot.val().status === "inactive") {
         var ref = firebase.database().ref('/users');
         var shopEmail = snapshot.val().shopEmail
         ref.child(username).set({
@@ -44,7 +44,7 @@ module.exports = {
             username: username
            })
            return res.status(200).send({message: "Success", username: username});
-    } else if (snapshot.val()===null && role === "Barbershop") {
+    } else if (!snapshot.exists() && role === "Barbershop") {
     var ref = firebase.database().ref('/users');
     ref.child(username).set({
         code: code,
