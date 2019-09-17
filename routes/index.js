@@ -503,6 +503,7 @@ module.exports = {
         const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
         var token = req.body.token
         var areaCode = req.body.zipCode
+        var username = req.body.username
         // Get on stripe and create account + membership
         // User card token to 1) Create Customer 2) Subscribe them to Stripe-defined Subscription plan 3) Process payment IMMEDIATELY
         // Use customer ID from Stripe response and save to firebase
@@ -510,53 +511,91 @@ module.exports = {
         // If all is successful, change barbershop status to "active" and render message to webpage
         // Success message should say the payment has been processed, blah blah
 
-        // stripe.customers.create({
-        //     source: token
-        //   }, function(err, customer) {
-        //     var customerZip = customer
-        //      stripe.subscriptions.create({
-        //    customer: customer.id,
-        //    items: [
-        //      {
-        //        plan: "plan_Fp5tfqu1NVrcvL"
-        //      }
-        //    ]
-        //  }, function(err, subscription) {
-        //      // Purchase phone number here
-        //      return res.status(200).send({message: "Success"});
-        //    }
-        //  );
-        //     })
+        stripe.customers.create({
+            source: token
+          }, function(err, customer) {
+            var customerZip = customer
+             stripe.subscriptions.create({
+           customer: customer.id,
+           items: [
+             {
+               plan: "plan_Fp5tfqu1NVrcvL"
+             }
+           ]
+         }, function(err, subscription) {
+             // Purchase phone number here
+             return res.status(200).send({message: "Success"});
+           }
+         );
+            })
 
         const accountSid = 'ACa76d8d56714594b83c8158acfdb6ed9c';
         const authToken = 'f28300660b1522e871b55efe9abc8228';
         const client = require('twilio')(accountSid, authToken);
 
 
-        client.availablePhoneNumbers('US')
-        .local
-        .list({areaCode: 510, limit: 1})
-        .then(local => local.forEach(l =>
-            client.incomingPhoneNumbers
-      .create({phoneNumber: l.friendlyName})
-      .then(incoming_phone_number => console.log(incoming_phone_number.sid)) 
-        ));
+        
 
-    //     var firebase = require('firebase');
+        var firebase = require('firebase');
     
-    //     var firebaseConfig = {
-    //     apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
-    //     authDomain: "nodebarbershopdatabase.firebaseapp.com",
-    //     databaseURL: "https://nodebarbershopdatabase.firebaseio.com",
-    //     projectId: "nodebarbershopdatabase",
-    //     storageBucket: "",
-    //     messagingSenderId: "393042645396",
-    //     appId: "1:393042645396:web:14b67934e1b60a69"
-    //   };
-    //   // Initialize Firebase
-    //   if (!firebase.apps.length) {
-    //     firebase.initializeApp(firebaseConfig);
-    // }
+        var firebaseConfig = {
+        apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
+        authDomain: "nodebarbershopdatabase.firebaseapp.com",
+        databaseURL: "https://nodebarbershopdatabase.firebaseio.com",
+        projectId: "nodebarbershopdatabase",
+        storageBucket: "",
+        messagingSenderId: "393042645396",
+        appId: "1:393042645396:web:14b67934e1b60a69"
+      };
+      // Initialize Firebase
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    var ref = firebase.database().ref('/users');
+    firebase.database().ref('/users/').once('value').then(function(userSnapshot) {
+        userSnapshot.forEach(function(userSnapshot) {
+            //console.log(userSnapshot.val().email)
+             if (userSnapshot.val().username === username) {
+                stripe.customers.create({
+                    source: token
+                  }, function(err, customer) {
+                      var stripeID = customer.id
+                     stripe.subscriptions.create({
+                   customer: customer.id,
+                   items: [
+                     {
+                       plan: "plan_Fp5tfqu1NVrcvL"
+                     }
+                   ]
+                 }, function(err, subscription) {
+                    client.availablePhoneNumbers('US')
+                    .local
+                    .list({areaCode: areaCode, limit: 1})
+                    .then(local => local.forEach(l =>
+                        client.incomingPhoneNumbers
+                  .create({phoneNumber: l.friendlyName})
+                  .then(incoming_phone_number => 
+                    // Save phone number, phone number ID, and Stripe ID to barbershop acct, set acct to active
+        //             var ref = firebase.database().ref('/users');
+        // var shopEmail = snapshot.val().shopEmail
+                    ref.child(username).set({
+                        phone: l.friendlyName,
+                        phoneID: incoming_phone_number.sid,
+                        stripeID: stripeID,
+                        status: "active"
+                    })
+                    )))
+                    return res.status(200).send({message: "Success"});
+                    
+                   }
+                 );
+                    })
+                } else {
+                    return res.status(500).send({message: "Error: There are no users"});
+                }
+                })
+    })
+
     
     }
 

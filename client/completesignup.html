@@ -128,7 +128,8 @@
                         } else {
                             const input = {
                                 token : result.token.id,
-                                zipCode: document.getElementById('zip').value
+                                zipCode: document.getElementById('zip').value,
+                                username: username
                             }
                             fetch('https://barbershop-app-react-node.herokuapp.com/completeBarbershopSignup', {
                                     method: 'POST',
@@ -137,7 +138,7 @@
                                 }).then((response) => response.json())
                                 .then((data) => {
                                     if (data.message === 'Success') {
-                                        document.getElementById('card-errors').innerText = "Thank you for joining the FadeList Family! Now that you're signed up, feel free to utilize the app!"
+                                        document.getElementById('card-errors').innerText = "Thank you for joining the FadeList Family! Now that you're signed up, feel free to log into the app!"
                                     } else {
                                         // Nested if elses for specific messages
                                     }
