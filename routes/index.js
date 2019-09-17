@@ -502,7 +502,7 @@ module.exports = {
 
         const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
         var token = req.body.token
-        var zipCode = req.body.zipCode
+        var areaCode = req.body.zipCode
         // Get on stripe and create account + membership
         // User card token to 1) Create Customer 2) Subscribe them to Stripe-defined Subscription plan 3) Process payment IMMEDIATELY
         // Use customer ID from Stripe response and save to firebase
@@ -510,24 +510,32 @@ module.exports = {
         // If all is successful, change barbershop status to "active" and render message to webpage
         // Success message should say the payment has been processed, blah blah
 
-        stripe.customers.create({
-            source: token
-          }, function(err, customer) {
-            var customerZip = customer
-             stripe.subscriptions.create({
-           customer: customer.id,
-           items: [
-             {
-               plan: "plan_Fp5tfqu1NVrcvL"
-             }
-           ]
-         }, function(err, subscription) {
-             console.log(customerZip)
-             return res.status(200).send({message: "Success"});
-           }
-         );
-            })
+        // stripe.customers.create({
+        //     source: token
+        //   }, function(err, customer) {
+        //     var customerZip = customer
+        //      stripe.subscriptions.create({
+        //    customer: customer.id,
+        //    items: [
+        //      {
+        //        plan: "plan_Fp5tfqu1NVrcvL"
+        //      }
+        //    ]
+        //  }, function(err, subscription) {
+        //      // Purchase phone number here
+        //      return res.status(200).send({message: "Success"});
+        //    }
+        //  );
+        //     })
 
+        const accountSid = 'ACa76d8d56714594b83c8158acfdb6ed9c';
+        const authToken = 'f28300660b1522e871b55efe9abc8228';
+        const client = require('twilio')(accountSid, authToken);
+
+        client.availablePhoneNumbers('916')
+        .mobile
+        .list({limit: 1})
+        .then(mobile => mobile.forEach(m => console.log(m.friendlyName)));
 
 
     //     var firebase = require('firebase');
