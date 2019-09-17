@@ -47,7 +47,6 @@ module.exports = {
     } else if (!snapshot.exists() && role === "Barbershop") {
     var ref = firebase.database().ref('/users');
     ref.child(username).set({
-        code: code,
         status: "inactive",
         name: name,
         email: email,
