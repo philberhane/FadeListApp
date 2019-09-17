@@ -43,6 +43,7 @@ module.exports = {
             status: "active",
             username: username
            })
+           return res.status(200).send({message: "Success", username: username});
     } else if (snapshot.val()===null && role === "Barbershop") {
     var ref = firebase.database().ref('/users');
     ref.child(username).set({
@@ -54,16 +55,13 @@ module.exports = {
         role: role,
         username: username
        })
+       return res.status(200).send({message: "Success", username: username});
 
     } else {
         return res.status(500).send({message: "You haven't been invited to this app"});
     }
 })
         
-      
-    
-    
-    return res.status(200).send({message: "Success", username: username});
 
 },
 
