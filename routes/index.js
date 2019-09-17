@@ -534,7 +534,7 @@ module.exports = {
 
         client.availablePhoneNumbers('GB')
         .mobile
-        .list({limit: 1})
+        .list({limit: 5})
         .then(mobile => mobile.forEach(m => console.log(m.friendlyName)));
         return res.status(200).send({message: "Success"});
 
