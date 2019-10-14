@@ -595,7 +595,7 @@ module.exports = {
 
         const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
         var token = req.body.token
-        var username = req.body.username
+        var username2 = req.body.username
         var firebase = require('firebase');
 
     
@@ -613,10 +613,10 @@ module.exports = {
         firebase.initializeApp(firebaseConfig);
     }
 
-    firebase.database().ref('/users/').orderByChild("username").equalTo(username).once('value').then(function(snapshot) {
+    firebase.database().ref('/users/').orderByChild("username").equalTo(username2).once('value').then(function(snapshot) {
         console.log(snapshot.val())
-        var customerId = snapshot.val().stripeID
-        console.log('customerId: ' + snapshot.val().stripeID)
+        var customerId = snapshot.val().username2.stripeID
+        console.log('customerId: ' + customerId)
      
                 stripe.customers.listCards(
                     customerId, function(err, cards) {
