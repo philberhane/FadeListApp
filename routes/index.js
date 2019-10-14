@@ -615,7 +615,7 @@ module.exports = {
 
     firebase.database().ref('/users/').orderByChild("username").equalTo(username).once('value').then(function(snapshot) {
         var customerId = snapshot.val().stripeID
-
+        console.log('customerId: ' + customerId)
      
                 stripe.customers.listCards(
                     customerId, function(err, cards) {
@@ -624,6 +624,7 @@ module.exports = {
                     has a card on file. If so, continue to update it. If not,
                     then send the message 'You dont have a card on file'
                     */
+                   console.log('cards: ' + cards)
                      if (cards.data[0]) {
                         
                         const cardId = cards.data[0].id
