@@ -34,8 +34,12 @@ app.post('/sendText', routes.sendText)
 app.post('/getWaitlist', routes.getWaitlist)
 app.post('/getBarbers', routes.getBarbers)
 app.post('/deleteBarber', routes.deleteBarber)
+app.post('/changeBilling', routes.changeBilling)
 app.get('/:code', function (req, res) {
     res.sendFile(__dirname + '/client/completesignup.html')
+})
+app.get('/changeBilling/:code', function (req, res) {
+    res.sendFile(__dirname + '/client/changebilling.html')
 })
 app.post('/completeBarbershopSignup', routes.completeBarbershopSignup)
 

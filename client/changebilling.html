@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html style="width: 100%; height: 100%" lang="en">
     <head>
-            <title>FadeList App - Complete Signup</title>
+            <title>FadeList App - Change Billing</title>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -43,9 +43,9 @@
 <body style="background-color: rgba(235, 235, 235, 1)">
         <script src="https://js.stripe.com/v3/"></script>
         <div style="font-family: arial" class ="col-md-12">
-        <h1>Subscription: $24.99/mo</h1>
+        <h1>Change Billing Info</h1>
         <h3 id="username"></h3>
-        <p>To complete signing up, please enter your method of payment (you can cancel at any time!)</p>
+        <p>Please enter the new billing info below</p>
         </div>
         <div  id="payment-form">
             <div class="form-row col-md-12">
@@ -55,11 +55,7 @@
               <div id="card-element" class="w-100 col-md-12">
                 <!-- A Stripe Element will be inserted here. -->
               </div>
-              <div style="margin-top: 15px" class="form-row col-md-12">
-                <label>Area Code</label>
-                <div class="form-row col-md-12"></div>
-                  <input id="zip" style="border:none; border-radius: 5px; padding-top: 5px;padding-bottom: 5px">
-              </div>
+ 
             </Div>
           
               <!-- Used to display form errors. -->
@@ -70,8 +66,8 @@
         </div>
 
         <script>
-                console.log(window.location.href.split('/')[3])
-                var username = window.location.href.split('/')[3]
+                console.log(window.location.href.split('/')[4])
+                var username = window.location.href.split('/')[4]
                             // Create a Stripe client.
                 var stripe = Stripe('pk_test_HywMMCNkt2NwJZeM7aVG8ghA00UIPnHLij');
 
@@ -115,11 +111,10 @@
                 // Handle form submission.
                 var form = document.getElementById('payment-form');
                 
-                document.getElementById('stripeButton').setAttribute("onclick", "beginMembership()")
+                document.getElementById('stripeButton').setAttribute("onclick", "changeBilling()")
 
-                function beginMembership() {
+                function changeBilling() {
 
-                    if (document.getElementById('zip').value.length > 0) {
 
                     stripe.createToken(card).then(function(result) {
                         if (result.error) {
@@ -129,17 +124,16 @@
                         } else {
                             const input = {
                                 token : result.token.id,
-                                zipCode: document.getElementById('zip').value,
                                 username: username
                             }
-                            fetch('https://barbershop-app-react-node.herokuapp.com/completeBarbershopSignup', {
+                            fetch('https://barbershop-app-react-node.herokuapp.com/changeBilling', {
                                     method: 'POST',
                                     body: JSON.stringify(input),
                                     headers: { "Content-Type": "application/json"}
                                 }).then((response) => response.json())
                                 .then((data) => {
                                     if (data.message === 'Success') {
-                                        document.getElementById('card-errors').innerText = "Thank you for joining the FadeList Family! Now that you're signed up, feel free to log into the app!"
+                                        document.getElementById('card-errors').innerText = "Your info has been successfully changed!"
                                     } else {
                                         // Nested if elses for specific messages
                                     }
@@ -148,9 +142,6 @@
 
                         }
                     })
-                } else {
-                    document.getElementById('card-errors').innerText = 'Area Code cannot be blank!'
-                }
 
                 }
                 // Function to send username and card info to server

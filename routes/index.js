@@ -589,6 +589,81 @@ module.exports = {
 
 
     
+    },
+
+    changeBilling(req, res) {
+
+        const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
+        var token = req.body.token
+        var username = req.body.username
+        var firebase = require('firebase');
+
+    
+    var firebaseConfig = {
+        apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
+        authDomain: "nodebarbershopdatabase.firebaseapp.com",
+        databaseURL: "https://nodebarbershopdatabase.firebaseio.com",
+        projectId: "nodebarbershopdatabase",
+        storageBucket: "",
+        messagingSenderId: "393042645396",
+        appId: "1:393042645396:web:14b67934e1b60a69"
+      };
+      // Initialize Firebase
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    firebase.database().ref('/users/').orderByChild("username").equalTo(username).once('value').then(function(snapshot) {
+        var customerId = snapshot.val().stripeID
+
+     
+                stripe.customers.listCards(
+                    customerId, function(err, cards) {
+    
+                    /*This "if" statement basically says to check if the user
+                    has a card on file. If so, continue to update it. If not,
+                    then send the message 'You dont have a card on file'
+                    */
+                     if (cards.data[0]) {
+                        
+                        const cardId = cards.data[0].id
+                    
+                   
+                    
+                       /* STEP THREE:
+                        Use both the Customer ID and Credit Card ID to Delete the Credit Card
+                        */  
+                        stripe.customers.deleteCard(
+                            customerId,
+                            cardId,
+                            function(err, confirmation) {
+                                }
+                                );
+                        
+                         
+                        /* STEP FOUR:
+                        Add a new Credit Card using the tokenized information, thus completing our update
+                        */
+                        stripe.customers.createSource(
+                            customerId,
+                            { card: token },
+                            function(err, card) {
+                                res.status(201).send({ 
+                                    message: 'Success'
+                                    })
+                            }
+                            );
+                        
+                        
+                    } else {
+                        res.status(500).send({
+                            message: 'Error: You do not have a card on file to update!'
+                                })
+                           }
+                        
+            })
+        })       
+    
     }
 
     
