@@ -614,7 +614,7 @@ module.exports = {
     }
 
     firebase.database().ref('/users/').orderByChild("username").equalTo(username2).once('value').then(function(snapshot) {
-        console.log(snapshot.val())
+        console.log(snapshot.val().email)
         var customerId = snapshot.val().username2.stripeID
         console.log('customerId: ' + customerId)
      
