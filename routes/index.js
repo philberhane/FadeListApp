@@ -25,7 +25,7 @@ module.exports = {
     var role = req.body.role;
     var username = email.split("@")[0];
     
-    firebase.database().ref('/users/').orderByChild("username").equalTo(username).once('value').then(function(snapshot) {
+    firebase.database().ref('/users').orderByChild("username").equalTo(username).once('value').then(function(snapshot) {
 
 
     // If role is barber, query database for existing invite
@@ -614,7 +614,7 @@ module.exports = {
     }
 
     firebase.database().ref('/users/').orderByChild("username").equalTo(username2).once('value').then(function(snapshot) {
-        console.log(snapshot.val().email)
+        console.log(snapshot.val())
         var customerId = snapshot.val().username2.stripeID
         console.log('customerId: ' + customerId)
      
