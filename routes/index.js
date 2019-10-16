@@ -700,7 +700,9 @@ module.exports = {
 
         client.incomingPhoneNumbers(phoneNumberSID).remove(function(err, deleted) {
             if (err){
-              console.log(err);
+                res.status(500).send({ 
+                    message: 'Error'
+                    })
             } else {
               console.log('Deleted from Twilio');
               stripe.customers.del(
@@ -712,7 +714,7 @@ module.exports = {
                         email: email,
                         reason: reason
                     })
-                    return res.status(201).send({ 
+                    res.status(201).send({ 
                         message: 'Success'
                         })
                 }
@@ -721,9 +723,6 @@ module.exports = {
         });
     })
 
-        return res.status(500).send({ 
-            message: 'Error'
-            })
 
     
 }
