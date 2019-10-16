@@ -670,6 +670,8 @@ module.exports = {
     cancelMembership(req, res) {
         const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
         var username = req.body.username
+        var email = req.body.email
+        var reason = req.body.reason
         var firebase = require('firebase');
         const accountSid = 'ACa76d8d56714594b83c8158acfdb6ed9c';
         const authToken = 'f28300660b1522e871b55efe9abc8228';
@@ -705,6 +707,11 @@ module.exports = {
                 customerId,
                 function(err, confirmation) {
                     ref.child(username).remove()
+                    var ref2 = firebase.database().ref('/Reasons');
+                    ref2.child(username).set({
+                        email: email,
+                        reason: reason
+                    })
                     return res.status(201).send({ 
                         message: 'Success'
                         })
