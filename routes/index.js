@@ -698,7 +698,7 @@ module.exports = {
 
         var ref = firebase.database().ref('/users');
 
-        client.incomingPhoneNumbers(phoneNumberSID).delete(function(err, deleted) {
+        client.incomingPhoneNumbers(phoneNumberSID).remove(function(err, deleted) {
             if (err){
               console.log(err);
             } else {
