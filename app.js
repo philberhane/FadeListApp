@@ -35,6 +35,7 @@ app.post('/getWaitlist', routes.getWaitlist)
 app.post('/getBarbers', routes.getBarbers)
 app.post('/deleteBarber', routes.deleteBarber)
 app.post('/changeBilling', routes.changeBilling)
+app.post('/cancelMembership', routes. cancelMembership)
 app.get('/:code', function (req, res) {
     res.sendFile(__dirname + '/client/completesignup.html')
 })

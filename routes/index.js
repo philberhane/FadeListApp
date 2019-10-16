@@ -665,6 +665,57 @@ module.exports = {
             })
         })       
     
+    },
+
+    cancelMembership(req, res) {
+        const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
+        var username = req.body.username
+        var firebase = require('firebase');
+        const accountSid = 'ACa76d8d56714594b83c8158acfdb6ed9c';
+        const authToken = 'f28300660b1522e871b55efe9abc8228';
+        const client = require('twilio')(accountSid, authToken);
+
+    
+    var firebaseConfig = {
+        apiKey: "AIzaSyAaX_NmPwK2_K1E6Azmj5PFaOw5KhJsJfY",
+        authDomain: "nodebarbershopdatabase.firebaseapp.com",
+        databaseURL: "https://nodebarbershopdatabase.firebaseio.com",
+        projectId: "nodebarbershopdatabase",
+        storageBucket: "",
+        messagingSenderId: "393042645396",
+        appId: "1:393042645396:web:14b67934e1b60a69"
+      };
+      // Initialize Firebase
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    firebase.database().ref('/users').child(username).once('value').then(function(snapshot) {
+        var customerId = snapshot.val().stripeID
+        var phoneNumberSID = snapshot.val().phoneID
+
+        var ref = firebase.database().ref('/users');
+
+        client.incomingPhoneNumbers(phoneNumberSID).delete(function(err, deleted) {
+            if (err){
+              console.log(err);
+            } else {
+              console.log('Deleted from Twilio');
+              stripe.customers.del(
+                customerId,
+                function(err, confirmation) {
+                    ref.child(username).remove()
+                    return res.status(201).send({ 
+                        message: 'Success'
+                        })
+                }
+              );
+            }
+        });
+
+        return res.status(500).send({ 
+            message: 'Error'
+            })
     }
 
     
