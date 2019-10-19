@@ -210,11 +210,11 @@ module.exports = {
                   console.log(error);
                 } else {
                   console.log('Email sent: ' + info.response);
-                  return res.status(200).send({message: "Success"});
+                 res.status(200).send({message: "Success"});
                 }
               });
         } else {
-            return res.status(500).send({message: "Account Exists"});
+         res.status(500).send({message: "Account Exists"});
         }
         })
             
