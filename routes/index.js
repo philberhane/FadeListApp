@@ -208,13 +208,14 @@ module.exports = {
               transporter.sendMail(mailOptions, function(error, info){
                 if (error) {
                   console.log(error);
+                  return res.status(500).send({message: "Account Exists"});
                 } else {
                   console.log('Email sent: ' + info.response);
-                 res.status(200).send({message: "Success"});
+                 return res.status(200).send({message: "Success"});
                 }
               });
         } else {
-         res.status(500).send({message: "Account Exists"});
+         return res.status(500).send({message: "Account Exists"});
         }
         })
             
