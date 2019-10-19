@@ -159,6 +159,7 @@ module.exports = {
         firebase.database().ref('/users/').child(username).once('value').then(function(snapshot) {
 
         if (!snapshot.exists()) {
+            console.log('Account doesnt exist')
             var ref = firebase.database().ref('/users');
             ref.child(username).set({
                 email: email,
@@ -182,6 +183,7 @@ module.exports = {
                 }
               });
         } else {
+            console.log('Account Exists')
           return res.status(500).send({message: "Account Exists"});
         }
         })
