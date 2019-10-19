@@ -154,44 +154,11 @@ module.exports = {
 
         console.log("shopEmail: " + shopEmail)
         console.log("email: " + email)
-        
-    
-        // Check if user exists with given username and email
-        // If not, create one with above values and send email to user saying they've been invited, then success message
-        // If user exists, send error message
-        // IF email fails, send error message
-        
-        // if (firebase.database().ref('/users/' + username) && role === "Barber" && firebase.database().ref('/users/' + username + "/status") === "inactive") {
-        //     var ref = firebase.database().ref('/users');
-        //     ref.child(username).set({
-        //         name: name,
-        //         email: email,
-        //         password: password,
-        //         role: role,
-        //         status: "active"
-        //        })
-        // } else if (!firebase.database().ref('/users/' + username) && role === "Barbershop") {
-    
-        // var ref = firebase.database().ref('/users');
-        // ref.child(username).set({
-        //     name: name,
-        //     email: email,
-        //     password: password,
-        //     role: role
-        //    })
-    
-        // } else {
-        //     res.status(500).send({message: "You haven't been invited to this app"});
-        // }
+   
 
-        firebase.database().ref('/users/').once('value').then(function(snapshot) {
-            var exists = false
-            snapshot.forEach(function(snapshot) {
-            if (snapshot.val().email === email) {
-                exists = true
-            }})
+        firebase.database().ref('/users/').child(username).once('value').then(function(snapshot) {
 
-        if (exists === false) {
+        if (!snapshot.exists()) {
             var ref = firebase.database().ref('/users');
             ref.child(username).set({
                 email: email,
