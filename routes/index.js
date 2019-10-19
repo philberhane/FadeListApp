@@ -215,15 +215,10 @@ module.exports = {
                 }
               });
         } else {
-          res.status(500).send({message: "Account Exists"});
+          return res.status(500).send({message: "Account Exists"});
         }
         })
-            
-          
-        
-        
-        res.status(200).send({message: "Success"});
-    
+                
     },
 
     receiveText(req, res) {
