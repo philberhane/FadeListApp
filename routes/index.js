@@ -215,7 +215,7 @@ module.exports = {
                 }
               });
         } else {
-         return res.status(500).send({message: "Account Exists"});
+          res.status(500).send({message: "Account Exists"});
         }
         })
             
