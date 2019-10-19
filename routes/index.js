@@ -125,8 +125,8 @@ module.exports = {
     secureConnection: false, // TLS requires secureConnection to be false
     port: 587, // port for secure SMTP
     auth: {
-        user: "fadelistapp@outlook.com",
-        pass: "Dope1234"
+        user: "fadelistapplication@outlook.com",
+        pass: "Habteab1"
     },
     tls: {
         ciphers:'SSLv3'
@@ -199,7 +199,7 @@ module.exports = {
                 shopEmail: shopEmail
             })
             var mailOptions = {
-                from: 'fadelistapp@outlook.com',
+                from: 'fadelistapplication@outlook.com',
                 to: email,
                 subject: "You've Been Invited!",
                 text: 'Your Barbershop has invited you to use the FadeList mobile application (the number one waitlist app). Please click here to download and signup!'
