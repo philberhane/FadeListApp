@@ -462,7 +462,7 @@ module.exports = {
 
     completeBarbershopSignup(req, res) {
 
-        const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
+        const stripe = require("stripe")("sk_live_NXBBNAswnpyuWIeptXmHs6zW00vtAuN1lT");
         var token = req.body.token
         var areaCode = req.body.zipCode
         var username = req.body.username
@@ -558,7 +558,7 @@ module.exports = {
 
     changeBilling(req, res) {
 
-        const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
+        const stripe = require("stripe")("sk_live_NXBBNAswnpyuWIeptXmHs6zW00vtAuN1lT");
         var token = req.body.token
         var username2 = req.body.username
         var firebase = require('firebase');
@@ -633,7 +633,7 @@ module.exports = {
     },
 
     cancelMembership(req, res) {
-        const stripe = require("stripe")("sk_test_Pdz96RELb0wzGPmrkhJqOn9c00HiSOyBDD");
+        const stripe = require("stripe")("sk_live_NXBBNAswnpyuWIeptXmHs6zW00vtAuN1lT");
         var username = req.body.username
         var email = req.body.email
         var reason = req.body.reason
